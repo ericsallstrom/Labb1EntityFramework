@@ -1,0 +1,38 @@
+﻿@model Labb1EntityFramework.Models.Employee
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="row"> 
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-controller="Employees" asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-dark">
+        <i class="fas fa-edit"></i> Edit
+    </a>    
+    <a class="btn btn-outline-secondary ms-2" asp-controller="Employees" asp-action="Index">Back</a>
+</div>

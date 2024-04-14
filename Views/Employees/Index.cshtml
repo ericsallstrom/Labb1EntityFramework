@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Labb1EntityFramework.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <h1>Employees</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td class="align-content-center">
+                        @Html.DisplayFor(modelItem => employee.FirstName)
+                    </td>
+                    <td class="align-content-center">
+                        @Html.DisplayFor(modelItem => employee.LastName)
+                    </td class="align-content-center">
+                    <td>
+                        @Html.DisplayFor(modelItem => employee.DateOfBirth)
+                    </td>
+                    <td class="d-flex gap-2">
+                        <a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-outline-dark btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-outline-dark btn-sm">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+                        <form method="post"
+                              asp-controller="Employees"
+                              asp-action="Delete"
+                              asp-route-id="@employee.Id"
+                              onsubmit="return confirm('Are you sure you want to delete this employee?');"
+                              class="">
+                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-success" asp-controller="Employees" asp-action="Create">
+        <i class="fa-solid fa-plus"></i> New Employee
+    </a>
+</div>
+
