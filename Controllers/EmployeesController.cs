@@ -35,10 +35,15 @@ namespace Labb1EntityFramework.Controllers
 
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (employee == null)
             {
                 return NotFound();
             }
+
+            int totalDaysApplied = GetTotalDaysAppliedByEmployee(employee.Id);
+
+            ViewData["TotalDaysApplied"] = totalDaysApplied;
 
             return View(employee);
         }
@@ -60,6 +65,7 @@ namespace Labb1EntityFramework.Controllers
             {
                 _context.Add(employee);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(employee);
@@ -74,10 +80,12 @@ namespace Labb1EntityFramework.Controllers
             }
 
             var employee = await _context.Employees.FindAsync(id);
+
             if (employee == null)
             {
                 return NotFound();
             }
+
             return View(employee);
         }
 
@@ -111,8 +119,10 @@ namespace Labb1EntityFramework.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(employee);
         }
 
@@ -126,6 +136,7 @@ namespace Labb1EntityFramework.Controllers
 
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (employee == null)
             {
                 return NotFound();
@@ -140,18 +151,35 @@ namespace Labb1EntityFramework.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var employee = await _context.Employees.FindAsync(id);
+
             if (employee != null)
             {
                 _context.Employees.Remove(employee);
             }
 
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool EmployeeExists(int id)
         {
             return _context.Employees.Any(e => e.Id == id);
+        }     
+
+        private int GetTotalDaysAppliedByEmployee(int employeeId)
+        {
+            var leaveApplications = _context.LeaveApplications.Where(la => la.FkEmployeeId == employeeId).ToList();
+
+            int totalDays = 0;
+
+            foreach (var leaveApp in leaveApplications)
+            {
+                TimeSpan days = leaveApp.EndDate - leaveApp.StartDate;
+                totalDays += days.Days + 1; // Include both start and end date
+            }            
+
+            return totalDays;
         }
     }
 }

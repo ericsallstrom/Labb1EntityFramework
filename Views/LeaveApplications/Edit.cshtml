@@ -13,13 +13,16 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group mb-3">
                 <label asp-for="FkEmployeeId" class="control-label">Employee</label>
-                <select asp-for="FkEmployeeId" class="form-control" asp-items="ViewBag.FkEmployeeId">
-                    <option disabled selected>Select Employee</option>
-                </select>
-                <span asp-validation-for="FkEmployeeId" class="text-danger"></span>
-            </div>           
+                <select hidden asp-for="FkEmployeeId" class="form-control" asp-items="ViewBag.FkEmployeeId"></select>                
+                <select disabled class="form-control" asp-items="ViewBag.FkEmployeeId"></select>                
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ApplicationDate" class="control-label"></label>                
+                <input disabled asp-for="ApplicationDate" class="form-control" type="date" />
+            </div>
             <div class="form-group mb-3">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" type="date" />
@@ -32,26 +35,21 @@
             </div>
             <div class="form-group mb-3">
                 <label asp-for="LeaveType" class="control-label"></label>
-                <select asp-for="LeaveType" class="form-control" asp-items="ViewBag.LeaveTypes"></select>
-                <input asp-for="LeaveType" class="form-control" />
+                <select asp-for="LeaveType" class="form-control" asp-items="ViewBag.LeaveTypes">
+                    <option disabled selected>Select Type of Leave</option>
+                </select>
                 <span asp-validation-for="LeaveType" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ApplicationDate" class="control-label"></label>
-                <input asp-for="ApplicationDate" class="form-control" type="date" />
-                <span asp-validation-for="ApplicationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-secondary ms-2" asp-action="Index">Back</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

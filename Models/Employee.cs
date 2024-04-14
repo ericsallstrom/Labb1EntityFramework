@@ -4,7 +4,7 @@ namespace Labb1EntityFramework.Models
 {
     public class Employee
     {
-        [Key]
+        [Key]        
         public int Id { get; set; }
 
         [Required]

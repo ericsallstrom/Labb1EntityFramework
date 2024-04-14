@@ -6,9 +6,9 @@ namespace Labb1EntityFramework.Models
     public class LeaveApplication
     {
         [Key]
-        public int Id { get; set; }              
-        
-        [Display(Name = "Application Date")]
+        public int Id { get; set; }
+
+        [Display(Name = "Submission Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime ApplicationDate { get; set; } = DateTime.Now;
 
@@ -21,13 +21,16 @@ namespace Labb1EntityFramework.Models
         [Display(Name = "End Date")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime EndDate { get; set; }
-        
+
+        [Required]
         [Display(Name = "Type of Leave")]
         public LeaveType? LeaveType { get; set; }
 
+        [Required]
         [ForeignKey("Employee")]
+        [Display(Name = "Employee")]
         public int FkEmployeeId { get; set; }
-        public Employee? Employee { get; set; }    
+        public Employee? Employee { get; set; }
     }
 
     public enum LeaveType
@@ -45,7 +48,7 @@ namespace Labb1EntityFramework.Models
         Sick,
 
         [Display(Name = "Vacation Leave")]
-        Vacation,            
+        Vacation,
 
         [Display(Name = "Other")]
         Other
